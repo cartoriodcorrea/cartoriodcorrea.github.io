@@ -13,7 +13,9 @@
   <meta property="og:description" content="Segurança jurídica, autenticidade e publicidade dos atos: notas, registro de imóveis, protesto e RTD/PJ em Solânea PB. Atendimento presencial e online.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cartoriodcorrea.com.br/">
-  <meta property="og:image" content="https://cartoriodcorrea.com.br/img/hero.jpg">
+  <meta property="og:image" content="https://cartoriodcorrea.com.br/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="pt_BR">
   <link rel="icon" href="img/favicon.ico">
   <link rel="apple-touch-icon" href="img/logo-cartorio.png">
@@ -104,6 +106,7 @@
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="container hero-inner">
     <p class="hero-eyebrow">Solânea · Paraíba</p>
+    <p class="status-chip" id="statusFuncionamento"></p>
     <h1>Segurança jurídica e autenticidade em cada ato</h1>
     <p class="hero-sub">O Cartório Dinah Corrêa atua com foco na segurança jurídica, autenticidade e publicidade dos atos, assegurando a proteção dos direitos e interesses de seus clientes.</p>
     <div class="hero-acoes">
@@ -225,6 +228,29 @@
   </div>
 </section>
 
+<!-- O QUE LEVAR -->
+<section class="docs" id="documentos">
+  <div class="container">
+    <div class="secao-cab">
+      <p class="secao-eyebrow">Guia rápido</p>
+      <h2>O que levar pro seu atendimento?</h2>
+      <p class="docs-intro">Escolha o que você precisa e veja os documentos mais comuns. A equipe confirma a lista exata do seu caso pelo WhatsApp.</p>
+    </div>
+    <div class="docs-abas" role="tablist" aria-label="Escolha o serviço">
+      <button class="docs-aba ativa" data-doc="firma" role="tab" aria-selected="true"><i class="ri-quill-pen-line"></i> Reconhecer firma</button>
+      <button class="docs-aba" data-doc="autenticacao" role="tab" aria-selected="false"><i class="ri-file-copy-2-line"></i> Autenticação</button>
+      <button class="docs-aba" data-doc="procuracao" role="tab" aria-selected="false"><i class="ri-draft-line"></i> Procuração</button>
+      <button class="docs-aba" data-doc="escritura" role="tab" aria-selected="false"><i class="ri-home-4-line"></i> Escritura</button>
+      <button class="docs-aba" data-doc="certidao" role="tab" aria-selected="false"><i class="ri-file-list-3-line"></i> Certidão</button>
+    </div>
+    <div class="docs-painel" id="docsPainel">
+      <ul class="docs-lista" id="docsLista"></ul>
+      <a class="btn btn-ouro docs-cta" id="docsCta" href="#" target="_blank" rel="noopener"><i class="ri-whatsapp-line"></i> Confirmar meu caso no WhatsApp</a>
+      <p class="docs-nota">Lista de referência com os itens mais comuns. Casos específicos podem pedir documentos adicionais.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ATENDIMENTO ONLINE -->
 <section class="online" id="online">
   <div class="container">
@@ -299,7 +325,10 @@
           <div>
             <strong>Endereço</strong>
             <p>R. José Amâncio Ramalho, 269, Centro<br>Solânea · PB · CEP 58225-000</p>
-            <a href="https://maps.app.goo.gl/czLHbShWfZh5XvQWA" target="_blank" rel="noopener" class="ct-link">Ver rota no mapa <i class="ri-arrow-right-up-line"></i></a>
+            <div class="ct-rotas">
+              <a href="https://maps.app.goo.gl/czLHbShWfZh5XvQWA" target="_blank" rel="noopener" class="ct-link"><i class="ri-map-2-line"></i> Google Maps</a>
+              <a href="https://waze.com/ul?ll=-6.756705,-35.656782&navigate=yes" target="_blank" rel="noopener" class="ct-link"><i class="ri-navigation-line"></i> Waze</a>
+            </div>
           </div>
         </div>
         <div class="ct-item">
@@ -376,6 +405,16 @@
 <a href="https://wa.me/5583993963957" class="wpp-flut" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
   <i class="ri-whatsapp-line"></i>
 </a>
+
+<!-- VLibras: tradutor oficial de Libras do governo federal -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper>
+    <div class="vw-plugin-top-wrapper"></div>
+  </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
 <script src="js/main.js"></script>
 </body>
