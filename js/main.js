@@ -18,6 +18,16 @@ if (menuBtn && menu) {
 const ano = document.getElementById('ano');
 if (ano) ano.textContent = new Date().getFullYear();
 
+// Anos de história (fundação em 26/11/1953, vira sozinho todo aniversário)
+const anosEl = document.getElementById('anosCartorio');
+if (anosEl) {
+  const hoje = new Date();
+  let anos = hoje.getFullYear() - 1953;
+  const mes = hoje.getMonth(); // 10 = novembro
+  if (mes < 10 || (mes === 10 && hoje.getDate() < 26)) anos--;
+  anosEl.textContent = anos;
+}
+
 // Guia "O que levar?"
 const DOCS = {
   firma: {
@@ -59,8 +69,20 @@ const DOCS = {
     itens: [
       'Nome completo das pessoas envolvidas no ato',
       'Se tiver: data aproximada, livro e folha do ato',
+      'Para certidão de imóvel: número da matrícula ou endereço completo do imóvel',
       'Documento de identificação de quem solicita',
       'Muitas certidões também podem ser pedidas online: pergunte pela opção digital'
+    ]
+  },
+  averbacao: {
+    msg: 'Olá! Preciso averbar uma construção na matrícula do imóvel. Pode confirmar os documentos do meu caso?',
+    itens: [
+      'Certidão de matrícula atualizada do imóvel',
+      'Documento de identificação e CPF do proprietário',
+      'Habite-se ou documento equivalente emitido pela prefeitura',
+      'Certidão negativa de débitos da obra, quando exigida',
+      'Projeto aprovado e responsabilidade técnica da obra (ART ou RRT)',
+      'Cada obra tem sua própria exigência: confirme pelo WhatsApp antes de vir'
     ]
   }
 };

@@ -26,7 +26,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.12;color:var(--grafite-escuro);font-weight:600}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 .container{width:100%;max-width:var(--container);margin:0 auto;padding:0 24px}
 
@@ -84,7 +84,7 @@ h2{font-size:2.4rem}
 }
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(105deg,rgba(20,19,17,.96) 0%,rgba(33,31,28,.88) 45%,rgba(26,25,23,.58) 100%);
+  background:linear-gradient(105deg,rgba(20,19,17,.94) 0%,rgba(28,26,24,.87) 48%,rgba(26,25,23,.34) 100%);
 }
 .hero-inner{padding:6.5rem 24px 6.8rem;max-width:820px}
 .hero-eyebrow{
@@ -108,7 +108,7 @@ h2{font-size:2.4rem}
 /* ACESSO RÁPIDO */
 .rapido{background:var(--grafite-escuro);padding:2.2rem 0 2.6rem;border-bottom:3px solid var(--ouro)}
 .rapido-titulo{color:var(--ouro);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700;margin-bottom:1.1rem}
-.rapido-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.rapido-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 .rapido-card{
   display:flex;align-items:center;gap:.8rem;
   background:rgba(255,255,255,.05);border:1px solid rgba(189,156,103,.35);border-radius:12px;
@@ -197,18 +197,36 @@ h2{font-size:2.4rem}
 .sobre-lista{list-style:none;margin-top:1.6rem;display:grid;gap:.85rem}
 .sobre-lista li{display:flex;align-items:center;gap:.7rem;font-weight:600;color:var(--grafite-escuro)}
 .sobre-lista i{color:var(--ouro-esc);font-size:1.35rem;flex-shrink:0}
-.sobre-card{
+.sobre-frase{
+  margin-top:2rem;padding:1.5rem 0 .2rem 1.6rem;border-left:3px solid var(--ouro);
+}
+.sobre-frase p{
+  font-family:'Cormorant Garamond',serif;font-size:1.55rem;line-height:1.35;
+  color:var(--grafite-escuro);margin-bottom:.7rem;
+}
+.sobre-frase cite{
+  font-style:normal;color:var(--ouro-esc);font-weight:700;letter-spacing:.03em;font-size:.95rem;
+}
+/* foto da placa + selo de anos */
+.sobre-figura{position:relative;margin:0}
+.sobre-figura img{
+  width:100%;border-radius:var(--raio);box-shadow:var(--sombra);
+  max-height:600px;object-fit:cover;object-position:center 30%;
+}
+.sobre-selo{
+  position:absolute;left:-22px;bottom:34px;
   background:linear-gradient(160deg,var(--marrom) 0%,var(--grafite-escuro) 100%);
-  color:#fff;padding:2.6rem 2.2rem;border-radius:var(--raio);box-shadow:var(--sombra);
-  position:relative;overflow:hidden;
+  color:#fff;border-radius:var(--raio);padding:1.15rem 1.4rem;
+  box-shadow:0 20px 40px -18px rgba(20,19,17,.85);
+  border:1px solid rgba(189,156,103,.45);
+  display:flex;align-items:center;gap:.85rem;
 }
-.sobre-card::after{
-  content:"";position:absolute;right:-40px;bottom:-40px;width:170px;height:170px;
-  border:2px solid rgba(189,156,103,.4);border-radius:50%;
+.sobre-selo strong{
+  font-family:'Cormorant Garamond',serif;font-size:3.1rem;line-height:1;color:var(--ouro);font-weight:700;
+  /* a Cormorant usa algarismos antigos por padrão e o "72" sai como "7²" */
+  font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1,"onum" 0;
 }
-.sobre-card-ic{font-size:2.6rem;color:var(--ouro);margin-bottom:1rem;display:block}
-.sobre-card-frase{font-family:'Cormorant Garamond',serif;font-size:1.5rem;line-height:1.35;margin-bottom:1.4rem}
-.sobre-card-assina{color:var(--ouro);font-weight:700;letter-spacing:.03em}
+.sobre-selo span{font-size:.86rem;line-height:1.25;color:#e2d9cb;letter-spacing:.02em}
 
 /* SERVIÇOS */
 .servicos{padding:5.5rem 0;background:var(--creme);border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
@@ -226,6 +244,17 @@ h2{font-size:2.4rem}
 .serv-ic{font-size:2.3rem;color:var(--grafite);margin-bottom:.9rem;display:block}
 .serv-card h3{font-size:1.65rem;margin-bottom:.6rem}
 .serv-card p{color:var(--cinza);font-size:1rem}
+.serv-intro{color:var(--cinza);margin-top:.9rem;font-size:1.05rem}
+.serv-extra{
+  display:flex;align-items:center;gap:.5rem;margin-top:.9rem;padding-top:.9rem;
+  border-top:1px solid var(--linha);font-size:.95rem;font-weight:600;color:var(--grafite-escuro);
+}
+.serv-extra i{color:var(--ouro-esc);font-size:1.15rem}
+.serv-extra a{color:var(--grafite-escuro);text-decoration:underline;text-underline-offset:3px}
+.serv-extra a:hover{color:var(--ouro-esc)}
+/* 5º card ocupa a linha inteira, em layout horizontal */
+.serv-card-larga{grid-column:1 / -1;display:flex;align-items:flex-start;gap:1.6rem}
+.serv-card-larga .serv-ic{margin-bottom:0;flex-shrink:0}
 .serv-nota{text-align:center;margin-top:2.4rem;color:var(--cinza);font-size:1.05rem}
 .serv-nota a{color:var(--grafite);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 
@@ -261,14 +290,24 @@ h2{font-size:2.4rem}
 .ct-link{display:inline-flex;align-items:center;gap:.35rem;color:var(--grafite);font-weight:700;font-size:.92rem;margin-top:.3rem}
 .ct-link:hover{color:var(--ouro-esc)}
 .ct-rotas{display:flex;gap:1.2rem;flex-wrap:wrap}
-.contato-mapa{border-radius:var(--raio);overflow:hidden;box-shadow:var(--sombra);min-height:380px;border:1px solid var(--linha)}
-.contato-mapa iframe{width:100%;height:100%;min-height:380px;border:0;display:block}
+.contato-visual{display:grid;gap:1.5rem;align-content:start}
+.contato-foto{margin:0}
+.contato-foto img{width:100%;border-radius:var(--raio);box-shadow:var(--sombra);border:1px solid var(--linha)}
+.contato-foto figcaption{
+  margin-top:.7rem;font-size:.9rem;color:var(--cinza-cl);display:flex;align-items:center;gap:.4rem;
+}
+.contato-mapa{border-radius:var(--raio);overflow:hidden;box-shadow:var(--sombra);min-height:320px;border:1px solid var(--linha)}
+.contato-mapa iframe{width:100%;height:100%;min-height:320px;border:0;display:block}
 
 /* RODAPÉ */
 .rodape{background:var(--grafite-escuro);color:#cabfae;padding:3.6rem 0 0}
 .rodape-inner{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.2rem}
 .rodape-logo{height:52px;margin-bottom:1rem}
 .rodape-marca p{font-size:.95rem;color:#b0a595;max-width:340px}
+.rodape-cns{
+  margin-top:.9rem;font-size:.8rem!important;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ouro)!important;font-weight:700;
+}
 .rodape-col h4{color:#fff;font-family:'Source Sans 3',sans-serif;font-size:.82rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:1rem;font-weight:700}
 .rodape-col a{display:block;color:#cabfae;font-size:.95rem;padding:.28rem 0;transition:color .2s}
 .rodape-col a:hover{color:var(--ouro)}
@@ -287,6 +326,8 @@ h2{font-size:2.4rem}
 /* RESPONSIVO */
 @media (max-width:960px){
   .sobre-grid,.contato-grid{grid-template-columns:1fr}
+  .sobre-figura{max-width:520px;margin:0 auto}
+  .sobre-selo{left:auto;right:18px;bottom:18px}
   .online-grid{grid-template-columns:repeat(3,1fr)}
   .rapido-grid{grid-template-columns:repeat(2,1fr)}
   .etapas-grid{grid-template-columns:1fr 1fr;gap:1.9rem}
@@ -309,6 +350,12 @@ h2{font-size:2.4rem}
   .menu a:not(.menu-cta)::after{display:none}
   .menu .menu-cta{margin:.8rem 24px 1rem;justify-content:center}
   .serv-grid{grid-template-columns:1fr}
+  .serv-card-larga{display:block}
+  .serv-card-larga .serv-ic{margin-bottom:.9rem}
+  .sobre-frase{padding-left:1.2rem;margin-top:1.7rem}
+  .sobre-frase p{font-size:1.35rem}
+  .sobre-selo{padding:.9rem 1.1rem}
+  .sobre-selo strong{font-size:2.5rem}
   .rapido-grid{grid-template-columns:1fr 1fr}
   .etapas-grid{grid-template-columns:1fr;gap:1.9rem}
   .online-grid{grid-template-columns:repeat(2,1fr)}
