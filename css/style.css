@@ -30,6 +30,12 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 .container{width:100%;max-width:var(--container);margin:0 auto;padding:0 24px}
 
+/* O atributo hidden do HTML so vale por `[hidden]{display:none}` da folha do
+   navegador, e qualquer classe com `display` (flex, grid) ganha dele por
+   especificidade: o elemento continuaria na tela mesmo marcado hidden. Esta
+   linha devolve o significado do atributo para o site inteiro. */
+[hidden]{display:none!important}
+
 /* eyebrow / cabeçalhos de seção */
 .secao-eyebrow{
   text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;font-weight:700;
@@ -325,6 +331,192 @@ h2{font-size:2.4rem}
 }
 .wpp-flut:hover{transform:scale(1.08)}
 
+/* ==========================================================================
+   CALENDÁRIO DA CONSCIÊNCIA
+   Três peças: a faixa da campanha no topo da home, o card de destaque do mês
+   na home e a página consciencia.html com os 12 meses.
+   A cor de cada mês entra por --cor-mes num atributo style do HTML estático,
+   pra página funcionar inteira sem JS; o JS só marca qual card é o mês
+   corrente e troca o conteúdo do destaque da home.
+   --cor-mes NÃO é cor de texto: o amarelo de setembro sobre branco dá
+   2,12:1, contra os 4,5:1 da WCAG. Texto usa --cor-mes-txt, derivada pelo
+   gerador do calendário (fora do repositório). Não digite cor de texto aqui à mão.
+   ========================================================================== */
+
+/* faixa da campanha: primeira coisa da home, entre o menu e o hero, com o
+   fundo na cor da campanha, que é o que a torna reconhecível de longe */
+/* --ouro-txt existe porque o --ouro-esc do site (#9a7a45) da 4,00:1 sobre
+   branco e 3,64:1 sobre creme, abaixo dos 4,5:1 da WCAG para texto pequeno.
+   O token global fica como esta (ele pinta o site inteiro): declara-se
+   uma variante escura so para os blocos do calendario. 5,31:1 e 4,83:1. */
+:root{--ouro-txt:#856637}
+
+.faixa-mes{
+  --fm-fundo:var(--grafite);
+  --fm-tinta:#ffffff;
+  display:block;background:var(--fm-fundo);color:var(--fm-tinta);
+  padding:.78rem 0;box-shadow:inset 0 -1px 0 rgba(0,0,0,.14);
+  transition:filter .15s ease;
+}
+.faixa-mes:hover .fm-cta{border-bottom-width:3px}
+.fm-int{display:flex;align-items:center;justify-content:center;gap:.5rem 1.1rem;flex-wrap:wrap;text-align:center}
+.fm-nome{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:1.3rem;
+}
+.fm-nome i{font-size:1.15rem}
+/* sem opacity. O gerador prova o par tinta/fundo, mas `opacity` compoe o
+   elemento contra o fundo DEPOIS disso: com .94, Marco (4,29), Agosto (4,30)
+   e Outubro (4,24) caiam abaixo de 4,5:1. Medido no navegador.
+   A hierarquia entre o nome e o tema ja vem do peso e do tamanho. */
+.fm-txt{font-size:.95rem;font-weight:500}
+/* chip invertido: fundo na tinta e texto na cor da faixa, então o contraste
+   dele é o mesmo da faixa, que o gerador já aprovou em 4,5:1 */
+.fm-canal{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:var(--fm-tinta);color:var(--fm-fundo);
+  font-weight:700;font-size:.85rem;padding:.28rem .8rem;border-radius:999px;white-space:nowrap;
+}
+.fm-cta{
+  display:inline-flex;align-items:center;gap:.3rem;font-weight:700;font-size:.9rem;
+  white-space:nowrap;border-bottom:2px solid currentColor;padding-bottom:1px;
+}
+
+/* destaque do mês na home */
+.destaque-mes{padding:5rem 0;background:var(--creme);border-top:1px solid var(--linha)}
+.dm-card{
+  --cor-mes:var(--ouro-esc);
+  /* sem JS (ou antes do main.js rodar) o fallback de
+     --cor-mes-txt caia em --ouro-esc: 4,00:1, abaixo dos 4,5:1 da WCAG.
+     Fixa o mesmo raciocinio da linha 349. Agora 5,31:1. */
+  --cor-mes-txt:var(--ouro-txt);
+  max-width:980px;margin:0 auto;
+  display:grid;grid-template-columns:96px 1fr;gap:1.7rem;align-items:start;
+  background:var(--branco);border:1px solid var(--linha);border-left:8px solid var(--cor-mes);
+  border-radius:var(--raio);padding:2rem;box-shadow:var(--sombra);
+}
+.dm-icone{
+  width:96px;height:96px;border-radius:20px;display:grid;place-items:center;
+  background:#f1ede5;background:color-mix(in srgb,var(--cor-mes) 14%,#fff);
+  color:var(--cor-mes-txt,var(--cor-mes));font-size:2.5rem;
+}
+.dm-rotulo{
+  display:block;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;font-weight:700;
+  color:var(--cor-mes-txt,var(--cor-mes));margin-bottom:.5rem;
+}
+.dm-card h2{font-size:2.1rem;margin-bottom:.6rem}
+.dm-card>div>p{color:var(--cinza);margin-bottom:1.1rem;max-width:64ch}
+.dm-acoes{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.dm-link{display:inline-flex;align-items:center;gap:.35rem;font-weight:700;color:var(--ouro-txt)}
+.dm-link:hover{color:var(--grafite-escuro)}
+
+/* caixa do canal de ajuda. Só aparece nos meses que tratam de vida, saúde
+   mental ou violência, e vem sempre com a ressalva de que o cartório não é
+   serviço de saúde nem órgão de assistência. */
+.apoio{
+  margin-top:1.2rem;display:flex;gap:1rem;align-items:flex-start;
+  background:#f6f2ea;background:color-mix(in srgb,var(--cor-mes) 10%,#fff);
+  border:1px solid var(--linha);border:1px solid color-mix(in srgb,var(--cor-mes) 42%,#fff);
+  border-radius:12px;padding:1.1rem 1.3rem;
+}
+.apoio>i{font-size:1.45rem;color:var(--cor-mes-txt,var(--cor-mes));flex-shrink:0;line-height:1.4}
+.apoio h3{font-size:1.15rem;margin-bottom:.3rem}
+.apoio p{color:var(--cinza);font-size:.93rem;margin-bottom:.25rem}
+.apoio p:last-child{margin-bottom:0}
+.apoio strong{color:var(--grafite-escuro)}
+
+/* PÁGINA consciencia.html */
+.pag-hero{
+  /* --grafite-escuro, e nao --grafite: a barra do menu ja e --grafite e as
+     duas coladas viravam um bloco escuro so, sem separacao visivel */
+  background:var(--grafite-escuro);color:#fff;
+  padding:4.4rem 0 4rem;border-bottom:3px solid var(--ouro);
+}
+.pag-hero h1{color:#fff;font-size:3.2rem;margin-bottom:1.1rem}
+.pag-hero-sub{color:#e6e0d6;font-size:1.15rem;max-width:720px;margin-bottom:2rem}
+.pag-hero .secao-eyebrow{color:var(--ouro)}
+
+.calendario{padding:5.5rem 0;background:var(--branco)}
+.calendario .secao-eyebrow,.canais .secao-eyebrow{color:var(--ouro-txt)}
+.secao-cab-centro{margin-left:auto;margin-right:auto;text-align:center}
+.cal-sub{color:var(--cinza);margin-top:.7rem}
+.cal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.mes{
+  --cor-mes:var(--ouro-esc);
+  --cor-mes-txt:var(--ouro-txt); /* mesmo repouso do .dm-card: sem inline, 5,31:1 */
+  position:relative;background:var(--branco);
+  border:1px solid var(--linha);border-top:6px solid var(--cor-mes);
+  border-radius:var(--raio);padding:1.6rem 1.6rem 1.5rem;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.mes:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.mes-num{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-weight:700;font-size:.73rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--cor-mes-txt,var(--cor-mes));margin-bottom:.5rem;
+}
+.mes h3{font-size:1.45rem;margin-bottom:.4rem}
+.mes p{color:var(--cinza);font-size:.95rem}
+.mes-tema{font-weight:600;color:var(--grafite-escuro);font-size:.95rem;margin-bottom:.45rem}
+.mes p.mes-apoio{
+  /* `.mes p` (0,1,1) ganharia de `.mes-apoio` (0,1,0) e pintaria de cinza:
+     o seletor com o tipo junto resolve sem precisar de !important */
+  display:flex;gap:.5rem;align-items:flex-start;margin-top:.9rem;
+  font-size:.88rem;font-weight:600;color:var(--grafite-escuro);
+  /* reserva antes do color-mix, como .apoio e .dm-icone ja fazem: sem ela,
+     navegador sem color-mix descarta a declaracao inteira e a caixa perde
+     fundo e borda */
+  background:#f6f2ea;background:color-mix(in srgb,var(--cor-mes) 10%,#fff);
+  border:1px solid var(--linha);border:1px solid color-mix(in srgb,var(--cor-mes) 40%,#fff);
+  border-radius:10px;padding:.6rem .8rem;
+}
+.mes-apoio i{color:var(--cor-mes-txt,var(--cor-mes));font-size:1.05rem;flex-shrink:0;line-height:1.45}
+/* a linha da fonte sustenta cada afirmacao de lei: nao pode ser o texto menos
+   legivel da pagina. --cinza-cl da 3,66:1 a 12,5px; --cinza da 7,50:1. */
+.mes-fonte{display:block;margin-top:.85rem;font-size:.78rem;color:var(--cinza);line-height:1.55}
+.mes-fonte a{color:var(--cinza);text-decoration:underline;text-underline-offset:2px}
+.mes-fonte a:hover{color:var(--ouro-txt)}
+/* mês corrente: marcado pelo JS, mas o card já é legível sem ele */
+.mes.atual{border-width:2px;border-top-width:6px;border-color:var(--cor-mes);box-shadow:var(--sombra)}
+.mes-selo{
+  position:absolute;top:-.85rem;right:1.1rem;
+  background:var(--cor-mes-txt,var(--cor-mes));color:#fff;
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .75rem;border-radius:999px;
+}
+
+/* onde pedir ajuda, no rodapé da página */
+.canais{padding:5.5rem 0;background:var(--creme);border-top:1px solid var(--linha)}
+.canais-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem}
+.canal{background:#fff;border:1px solid var(--linha);border-radius:var(--raio);padding:1.7rem 1.6rem}
+.canal i{font-size:1.9rem;color:var(--ouro-txt);margin-bottom:.7rem;display:block}
+.canal h3{font-size:1.4rem;margin-bottom:.4rem}
+.canal p{color:var(--cinza);font-size:.95rem}
+.canal a{color:var(--ouro-txt);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.aviso-legal{
+  display:flex;gap:1rem;align-items:flex-start;margin-top:2.2rem;
+  background:#fff;border:1px solid var(--linha);border-left:5px solid var(--ouro);
+  border-radius:var(--raio);padding:1.5rem 1.7rem;
+}
+.aviso-legal>i{font-size:1.6rem;color:var(--ouro-txt);flex-shrink:0;line-height:1.4}
+.aviso-legal h3{font-size:1.3rem;margin-bottom:.4rem}
+.aviso-legal p{color:var(--cinza);font-size:.96rem}
+
+@media (max-width:960px){
+  .cal-grid{grid-template-columns:repeat(2,1fr)}
+  .canais-grid{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .cal-grid{grid-template-columns:1fr}
+  .dm-card{grid-template-columns:1fr;gap:1.2rem;padding:1.6rem 1.4rem}
+  .dm-icone{width:70px;height:70px;font-size:1.9rem;border-radius:16px}
+  .dm-card h2{font-size:1.75rem}
+  .apoio{flex-direction:column;gap:.6rem}
+  .pag-hero h1{font-size:2.4rem}
+  .fm-int{gap:.4rem .8rem}
+  .fm-nome{font-size:1.15rem}
+}
+
 /* RESPONSIVO */
 @media (max-width:960px){
   .sobre-grid,.contato-grid{grid-template-columns:1fr}
@@ -347,7 +539,7 @@ h2{font-size:2.4rem}
     flex-direction:column;align-items:stretch;gap:0;width:100%;
     max-height:0;overflow:hidden;transition:max-height .3s ease;
   }
-  .menu.aberto{max-height:460px}
+  .menu.aberto{max-height:560px}
   .menu a{padding:.95rem 24px;border-bottom:1px solid rgba(255,255,255,.08)}
   .menu a:not(.menu-cta)::after{display:none}
   .menu .menu-cta{margin:.8rem 24px 1rem;justify-content:center}

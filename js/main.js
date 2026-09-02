@@ -122,3 +122,128 @@ if (statusEl) {
     statusEl.classList.add('fechado');
   }
 }
+
+/* ==========================================================================
+   CALENDÁRIO DA CONSCIÊNCIA
+   Quem vira o mês é o new Date() do navegador: não há robô, tarefa agendada
+   nem manutenção mensal. O conteúdo de verdade é ESTÁTICO no HTML (sem JS a
+   página fica inteira e o buscador lê); este bloco só DESTACA o mês corrente.
+   Não editar o objeto abaixo à mão: ele é gerado por
+   ferramenta de geração do calendário (fora do repositório), que
+   escreve também os cards da página e os teasers da home. Editar aqui faz os
+   três divergirem, que é exatamente o defeito que o gerador existe pra evitar.
+   ========================================================================== */
+
+var CAMPANHAS_MES = {
+  1:  { nome: "Janeiro Branco",      cor: "#7a8b99",  corTxt: "#657684", 
+       faixaFundo: "#7a8b99",  faixaTinta: "#1a1917",  icone: "ri-mental-health-line",  
+       tema: "Saúde mental e cuidado com a própria cabeça.",
+       apoio: { chip: "Precisa conversar? Ligue 188", titulo: "Precisa conversar? Ligue 188", texto: "O CVV atende de graça, em todo o Brasil. O telefone 188 funciona 24 horas por dia, todos os dias; o chat tem horário próprio, publicado no site do CVV, que também atende por e-mail." } },
+  2:  { nome: "Fevereiro Roxo",      cor: "#6a3d9a",  corTxt: "#6a3d9a", 
+       faixaFundo: "#6a3d9a",  faixaTinta: "#ffffff",  icone: "ri-empathize-line",      
+       tema: "Lúpus, Alzheimer e fibromialgia." },
+  3:  { nome: "Março Lilás",         cor: "#b046c4",  corTxt: "#b046c4", 
+       faixaFundo: "#b046c4",  faixaTinta: "#ffffff",  icone: "ri-women-line",          
+       tema: "Prevenção do câncer do colo do útero." },
+  4:  { nome: "Abril Azul",          cor: "#1e9ad6",  corTxt: "#187bab", 
+       faixaFundo: "#1e9ad6",  faixaTinta: "#1a1917",  icone: "ri-puzzle-line",         
+       tema: "Autismo, inclusão e direito de ser atendido." },
+  5:  { nome: "Maio Amarelo",        cor: "#d4a017",  corTxt: "#926e10", 
+       faixaFundo: "#d4a017",  faixaTinta: "#1a1917",  icone: "ri-roadster-line",       
+       tema: "Segurança no trânsito e redução de acidentes." },
+  6:  { nome: "Junho Violeta",       cor: "#5b3fa8",  corTxt: "#5b3fa8", 
+       faixaFundo: "#5b3fa8",  faixaTinta: "#ffffff",  icone: "ri-parent-line",         
+       tema: "Enfrentamento da violência contra a pessoa idosa.",
+       apoio: { chip: "Violência contra a pessoa idosa? Disque 100", titulo: "Violência contra a pessoa idosa: Disque 100", texto: "A denúncia é gratuita, funciona 24 horas todos os dias, pode ser anônima e recebe número de protocolo. Também atende por WhatsApp e pelo site da Ouvidoria Nacional de Direitos Humanos." } },
+  7:  { nome: "Julho Amarelo",       cor: "#b8860b",  corTxt: "#976e09", 
+       faixaFundo: "#b8860b",  faixaTinta: "#1a1917",  icone: "ri-syringe-line",        
+       tema: "Luta contra as hepatites virais." },
+  8:  { nome: "Agosto Lilás",        cor: "#9b5de5",  corTxt: "#924fe3", 
+       faixaFundo: "#a065e6",  faixaTinta: "#1a1917",  icone: "ri-shield-user-line",    
+       tema: "Proteção à mulher e fim da violência doméstica.",
+       apoio: { chip: "Violência contra a mulher? Ligue 180", titulo: "Violência contra a mulher: Ligue 180", texto: "A Central de Atendimento à Mulher é gratuita e funciona 24 horas por dia, todos os dias da semana. Atende por telefone, por WhatsApp e por e-mail." } },
+  9:  { nome: "Setembro Amarelo",    cor: "#e6a700",  corTxt: "#966d00", 
+       faixaFundo: "#e6a700",  faixaTinta: "#1a1917",  icone: "ri-heart-pulse-line",    
+       tema: "Valorização da vida e prevenção do suicídio.",
+       apoio: { chip: "Precisa conversar? Ligue 188", titulo: "Precisa conversar? Ligue 188", texto: "O CVV atende de graça, em todo o Brasil. O telefone 188 funciona 24 horas por dia, todos os dias; o chat tem horário próprio, publicado no site do CVV, que também atende por e-mail." } },
+  10: { nome: "Outubro Rosa",        cor: "#d63384",  corTxt: "#d52f81", 
+       faixaFundo: "#d52f81",  faixaTinta: "#ffffff",  icone: "ri-hand-heart-line",     
+       tema: "Prevenção e diagnóstico precoce do câncer de mama." },
+  11: { nome: "Novembro Azul",       cor: "#1565c0",  corTxt: "#1565c0", 
+       faixaFundo: "#1565c0",  faixaTinta: "#ffffff",  icone: "ri-men-line",            
+       tema: "Saúde do homem e câncer de próstata." },
+  12: { nome: "Dezembro Vermelho",   cor: "#c62828",  corTxt: "#c62828", 
+       faixaFundo: "#c62828",  faixaTinta: "#ffffff",  icone: "ri-test-tube-line",      
+       tema: "Prevenção do HIV, da aids e de outras infecções sexualmente transmissíveis." }
+};
+
+(function () {
+  var mes = new Date().getMonth() + 1;
+  var dados = CAMPANHAS_MES[mes];
+  if (!dados) return;
+
+  function poeTxt(id, txt) {
+    var el = document.getElementById(id);
+    if (el && txt) el.textContent = txt;
+  }
+
+  // (a) consciencia.html: marca o card do mês e leva ele pro topo da grade
+  var grade = document.getElementById('calGrid');
+  if (grade) {
+    var card = grade.querySelector('[data-mes="' + mes + '"]');
+    if (card && !card.querySelector('.mes-selo')) {
+      card.classList.add('atual');
+      // o selo nasce aqui, e não nos 12 cards do HTML: sem JS não há "mês
+      // corrente" nenhum, então não faz sentido 12 selos escondidos no fonte
+      var selo = document.createElement('span');
+      selo.className = 'mes-selo';
+      selo.textContent = 'Estamos aqui';
+      card.insertBefore(selo, card.firstChild);
+      grade.insertBefore(card, grade.firstChild);
+    }
+  }
+
+  // (b) home: a faixa do topo, antes do hero. Não depende dos teasers: usa
+  // nome e tema, que vêm do mesmo gerador dos cards, então não há o que divergir.
+  var fx = document.getElementById('faixaMes');
+  if (fx) {
+    fx.style.setProperty('--fm-fundo', dados.faixaFundo || dados.cor);
+    fx.style.setProperty('--fm-tinta', dados.faixaTinta || '#ffffff');
+    poeTxt('fmNome', dados.nome);
+    poeTxt('fmTxt', dados.tema);
+    var fi = document.getElementById('fmIcone');
+    if (fi) fi.className = dados.icone;
+    // atribuição, nunca só "desesconder": assim o estado fica certo mesmo se
+    // este bloco rodar duas vezes na mesma página
+    var canal = document.getElementById('fmCanal');
+    if (canal) {
+      canal.hidden = !dados.apoio;
+      if (dados.apoio) poeTxt('fmCanalTxt', dados.apoio.chip);
+    }
+  }
+
+  // (c) home: troca o bloco neutro pelo destaque do mês corrente
+  var dm = document.getElementById('dmCard');
+  if (!dm) return;
+  var teaser = dm.querySelector('#dmTeaser');
+  if (!teaser) return;                       // sem os teasers no HTML, fica o neutro
+  var meu = teaser.querySelector('[data-mes="' + mes + '"]');
+  if (!meu) return;                          // mês sem teaser escrito: fica o neutro
+
+  dm.style.setProperty('--cor-mes', dados.cor);
+  dm.style.setProperty('--cor-mes-txt', dados.corTxt || dados.cor);
+  poeTxt('dmRotulo', 'Campanha deste mês');
+  poeTxt('dmTitulo', dados.nome);
+  poeTxt('dmTexto', meu.textContent.trim());
+  var ic = document.getElementById('dmIcone');
+  if (ic) ic.className = dados.icone;
+
+  var apoio = document.getElementById('dmApoio');
+  if (apoio) {
+    apoio.hidden = !dados.apoio;
+    if (dados.apoio) {
+      poeTxt('dmApoioTitulo', dados.apoio.titulo);
+      poeTxt('dmApoioTexto', dados.apoio.texto);
+    }
+  }
+})();

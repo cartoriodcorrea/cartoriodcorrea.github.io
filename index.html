@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -100,6 +100,7 @@
         <a href="#sobre">Sobre</a>
         <a href="#servicos">Serviços</a>
         <a href="#online">Atendimento online</a>
+        <a href="#consciencia">Consciência</a>
         <a href="#duvidas">Dúvidas</a>
         <a href="#contato">Contato</a>
         <a href="https://wa.me/5583993963957" class="menu-cta" target="_blank" rel="noopener"><i class="ri-whatsapp-line"></i> Falar no WhatsApp</a>
@@ -107,6 +108,19 @@
     </div>
   </div>
 </header>
+
+<!-- Faixa da campanha do mes. O texto abaixo e o NEUTRO, verdadeiro o ano
+     inteiro e o que fica de pe sem JS. O js/main.js troca nome, tema, cor e
+     icone pelo mes corrente e acende o chip do canal de ajuda nos meses que
+     tratam de vida, saude mental ou violencia. Vai so na home. -->
+<a class="faixa-mes" id="faixaMes" href="consciencia.html">
+  <div class="container fm-int">
+    <span class="fm-nome"><i class="ri-calendar-check-line" id="fmIcone" aria-hidden="true"></i><span id="fmNome">Calendário da consciência</span></span>
+    <span class="fm-txt" id="fmTxt">A cada mês, uma causa, com a fonte de cada uma.</span>
+    <span class="fm-canal" id="fmCanal" hidden><i class="ri-phone-line" aria-hidden="true"></i> <span id="fmCanalTxt">Precisa conversar? Ligue 188</span></span>
+    <span class="fm-cta">Saiba mais <i class="ri-arrow-right-line" aria-hidden="true"></i></span>
+  </div>
+</a>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
@@ -205,7 +219,7 @@
         <p class="serv-extra"><i class="ri-phone-line"></i> Atendimento direto do setor: <a href="tel:+5583991259719">(83) 99125-9719</a></p>
       </article>
       <article class="serv-card">
-        <i class="ri-stamp-line serv-ic" aria-hidden="true"></i>
+        <i class="ri-file-paper-2-line serv-ic" aria-hidden="true"></i>
         <h3>Registro de Títulos e Documentos</h3>
         <p>Dá validade, publicidade e segurança jurídica a documentos diversos, como contratos particulares e notificações extrajudiciais. É o registro que preserva direitos e comprova a existência e a data de um documento perante terceiros.</p>
       </article>
@@ -306,6 +320,54 @@
         <i class="ri-file-shield-2-line"></i><span>RTDPJ Brasil</span><small>Registro de títulos e documentos</small>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- Destaque do mes: campanha nacional de conscientizacao. O conteudo abaixo e
+     o NEUTRO (verdadeiro o ano inteiro, o que fica de pe sem JS e o que o robo
+     de busca le). O js/main.js troca rotulo, titulo, texto, cor e icone pelo
+     mes corrente, e mostra a caixa do canal de ajuda nos meses que pedem.
+     Nao existe manutencao mensal: quem vira o mes e o new Date(). -->
+<section class="destaque-mes" id="consciencia">
+  <div class="container">
+    <article class="dm-card" id="dmCard">
+      <div class="dm-icone"><i class="ri-calendar-check-line" id="dmIcone" aria-hidden="true"></i></div>
+      <div>
+        <span class="dm-rotulo" id="dmRotulo">Calendário da consciência</span>
+        <h2 id="dmTitulo">A cada mês, uma causa</h2>
+        <p id="dmTexto">O Brasil dedica cada mês do ano a uma campanha de conscientização, e boa parte delas está escrita em lei federal. O Cartório Dinah Corrêa abre espaço para elas aqui, com a fonte de cada uma e os canais oficiais de ajuda.</p>
+<!-- INI:TEASERS -->
+        <!-- Frases do destaque da home, uma por mes. Ficam ocultas: o JS pega
+             a do mes corrente e joga no #dmTexto. Sem JS, o visitante le o
+             texto neutro acima, que e verdadeiro o ano inteiro. -->
+        <div id="dmTeaser" hidden>
+          <span data-mes="1">Janeiro Branco chama atenção para a saúde mental, e pede uma coisa só: procurar ajuda cedo, antes de chegar ao limite.</span>
+          <span data-mes="2">Fevereiro Roxo fala de lúpus, Alzheimer e fibromialgia. No caso do Alzheimer há um lado prático: todo ato notarial parte de que quem assina entende o que está assinando.</span>
+          <span data-mes="3">Março Lilás é a prevenção do câncer do colo do útero, um dos poucos que dá pra evitar, com rastreamento na unidade de saúde e vacina contra o HPV.</span>
+          <span data-mes="4">Abril Azul é a conscientização sobre o autismo. Para um cartório, é dever em lei: o artigo 83 da Lei Brasileira de Inclusão proíbe negar ou dificultar atendimento em razão de deficiência.</span>
+          <span data-mes="5">Maio Amarelo é sobre trânsito, e pede atenção justamente no trajeto curto e conhecido, o de todo dia.</span>
+          <span data-mes="6">Junho Violeta enfrenta a violência contra a pessoa idosa, que costuma aparecer como negligência e uso indevido dos bens, e não como agressão.</span>
+          <span data-mes="7">Julho Amarelo é a luta contra as hepatites virais, que na maioria das vezes são silenciosas. É por isso que a campanha insiste no teste.</span>
+          <span data-mes="8">Agosto Lilás é o mês de proteção à mulher, e a lei que o institui pede justamente que se divulguem as medidas cabíveis e os canais de denúncia.</span>
+          <span data-mes="9">Setembro Amarelo é a campanha de valorização da vida e prevenção do suicídio. Falar sobre o assunto ajuda; o silêncio é o que mais atrapalha.</span>
+          <span data-mes="10">Outubro Rosa é a prevenção do câncer de mama. O recado é simples: quanto mais cedo se encontra, maior a chance de cura.</span>
+          <span data-mes="11">Novembro Azul é a saúde do homem, e existe pra levar homem ao serviço de saúde antes de o problema apertar.</span>
+          <span data-mes="12">Dezembro Vermelho é prevenção do HIV e das ISTs. O tratamento é gratuito no Brasil desde 1996, e discriminar quem vive com HIV é crime desde 2014.</span>
+        </div>
+      <!-- FIM:TEASERS -->        <div class="apoio" id="dmApoio" hidden>
+          <i class="ri-phone-line" aria-hidden="true"></i>
+          <div>
+            <h3 id="dmApoioTitulo">Precisa conversar? Ligue 188</h3>
+            <p id="dmApoioTexto">O CVV atende de graça, em todo o Brasil. O telefone 188 funciona 24 horas por dia, todos os dias; o chat tem horário próprio, publicado no site do CVV, que também atende por e-mail.</p>
+            <p>O Cartório Dinah Corrêa <strong>não é serviço de saúde nem órgão de assistência</strong>. Aqui a gente só aponta o caminho certo.</p>
+          </div>
+        </div>
+        <div class="dm-acoes">
+          <a class="btn btn-ouro" href="consciencia.html"><i class="ri-calendar-2-line"></i> Ver o calendário do ano</a>
+          <a class="dm-link" href="consciencia.html#ajuda">Onde pedir ajuda <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -422,6 +484,7 @@
       <a href="#sobre">Sobre</a>
       <a href="#servicos">Serviços</a>
       <a href="#online">Atendimento online</a>
+      <a href="consciencia.html">Calendário da consciência</a>
       <a href="#contato">Contato</a>
     </div>
     <div class="rodape-col">
@@ -463,6 +526,6 @@
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
-<script src="js/main.js?v=6"></script>
+<script src="js/main.js?v=7"></script>
 </body>
 </html>
