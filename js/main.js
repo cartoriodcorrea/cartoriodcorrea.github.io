@@ -131,7 +131,20 @@ if (statusEl) {
   function mede() { document.documentElement.style.setProperty('--topo-h', topo.offsetHeight + 'px'); }
   mede();
   window.addEventListener('resize', mede);
-  window.addEventListener('load', mede);
+  window.addEventListener('load', function () {
+    mede();
+    // pagina aberta ja com #ancora no endereco: o navegador rolou ANTES deste
+    // script medir o cabecalho; reposiciona sem animacao, ja com a margem certa
+    if (location.hash && location.hash.length > 1) {
+      var alvo = document.getElementById(location.hash.slice(1));
+      if (alvo) {
+        var raiz = document.documentElement, antes = raiz.style.scrollBehavior;
+        raiz.style.scrollBehavior = 'auto';
+        alvo.scrollIntoView({ block: 'start' });
+        raiz.style.scrollBehavior = antes;
+      }
+    }
+  });
 })();
 
 /* ==========================================================================
