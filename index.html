@@ -107,20 +107,21 @@
       </nav>
     </div>
   </div>
+  <!-- Faixa da campanha do mes, DENTRO do cabecalho fixo (fica visivel ao rolar)
+         e apontando para o card #consciencia desta pagina. O texto abaixo e o
+         NEUTRO, verdadeiro o ano inteiro e o que fica de pe sem JS. O js/main.js
+         troca nome, tema, cor e icone pelo mes corrente e acende o chip do canal de
+         ajuda nos meses que tratam de vida, saude mental ou violencia. So na home. -->
+  <a class="faixa-mes" id="faixaMes" href="#consciencia">
+    <div class="container fm-int">
+      <span class="fm-nome"><i class="ri-calendar-check-line" id="fmIcone" aria-hidden="true"></i><span id="fmNome">Calendário da consciência</span></span>
+      <span class="fm-txt" id="fmTxt">A cada mês, uma causa, com a fonte de cada uma.</span>
+      <span class="fm-canal" id="fmCanal" hidden><i class="ri-phone-line" aria-hidden="true"></i> <span id="fmCanalTxt">Precisa conversar? Ligue 188</span></span>
+      <span class="fm-cta">Saiba mais <i class="ri-arrow-right-line" aria-hidden="true"></i></span>
+    </div>
+  </a>
 </header>
 
-<!-- Faixa da campanha do mes. O texto abaixo e o NEUTRO, verdadeiro o ano
-     inteiro e o que fica de pe sem JS. O js/main.js troca nome, tema, cor e
-     icone pelo mes corrente e acende o chip do canal de ajuda nos meses que
-     tratam de vida, saude mental ou violencia. Vai so na home. -->
-<a class="faixa-mes" id="faixaMes" href="consciencia.html">
-  <div class="container fm-int">
-    <span class="fm-nome"><i class="ri-calendar-check-line" id="fmIcone" aria-hidden="true"></i><span id="fmNome">Calendário da consciência</span></span>
-    <span class="fm-txt" id="fmTxt">A cada mês, uma causa, com a fonte de cada uma.</span>
-    <span class="fm-canal" id="fmCanal" hidden><i class="ri-phone-line" aria-hidden="true"></i> <span id="fmCanalTxt">Precisa conversar? Ligue 188</span></span>
-    <span class="fm-cta">Saiba mais <i class="ri-arrow-right-line" aria-hidden="true"></i></span>
-  </div>
-</a>
 
 <!-- HERO -->
 <section class="hero" id="inicio">

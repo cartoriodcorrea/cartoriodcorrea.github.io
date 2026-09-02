@@ -123,6 +123,17 @@ if (statusEl) {
   }
 }
 
+// Altura real do cabecalho fixo, para as ancoras (#consciencia, #sobre...) nao
+// pararem escondidas embaixo dele. Recalcula quando a janela muda de tamanho.
+(function () {
+  var topo = document.getElementById('topo');
+  if (!topo) return;
+  function mede() { document.documentElement.style.setProperty('--topo-h', topo.offsetHeight + 'px'); }
+  mede();
+  window.addEventListener('resize', mede);
+  window.addEventListener('load', mede);
+})();
+
 /* ==========================================================================
    CALENDÁRIO DA CONSCIÊNCIA
    Quem vira o mês é o new Date() do navegador: não há robô, tarefa agendada
@@ -220,6 +231,19 @@ var CAMPANHAS_MES = {
       canal.hidden = !dados.apoio;
       if (dados.apoio) poeTxt('fmCanalTxt', dados.apoio.chip);
     }
+  }
+
+  // (b2) a faixa leva ao card desta pagina: rola ate ele respeitando a margem do
+  // cabecalho fixo (scroll-margin-top). O href="#consciencia" fica como reserva
+  // para quem estiver sem JS.
+  if (fx) {
+    fx.addEventListener('click', function (e) {
+      var alvo = document.getElementById('consciencia');
+      if (!alvo) return;
+      e.preventDefault();
+      alvo.scrollIntoView({ block: 'start' });   // suavidade vem do css (html{scroll-behavior})
+      if (history.replaceState) history.replaceState(null, '', '#consciencia');
+    });
   }
 
   // (c) home: troca o bloco neutro pelo destaque do mês corrente

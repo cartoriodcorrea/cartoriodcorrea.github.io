@@ -17,6 +17,10 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+/* o cabecalho e fixo (sticky) e agora carrega a faixa da campanha: ancora que
+   cai embaixo dele fica escondida. --topo-h vem do js (altura real do header);
+   sem js vale a reserva. */
+section[id],.destaque-mes{scroll-margin-top:calc(var(--topo-h,190px) + 12px)}
 body{
   font-family:'Source Sans 3',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   color:var(--tinta);
@@ -513,8 +517,13 @@ h2{font-size:2.4rem}
   .dm-card h2{font-size:1.75rem}
   .apoio{flex-direction:column;gap:.6rem}
   .pag-hero h1{font-size:2.4rem}
-  .fm-int{gap:.4rem .8rem}
-  .fm-nome{font-size:1.15rem}
+  /* dentro do cabecalho fixo a faixa tem que ser baixa no celular: fica so o
+     nome da campanha e o chip do canal de ajuda; o tema e o "saiba mais" saem */
+  .fm-int{gap:.3rem .7rem}
+  .fm-nome{font-size:1.1rem}
+  .fm-txt,.fm-cta{display:none}
+  .fm-canal{font-size:.8rem;padding:.22rem .65rem}
+  .faixa-mes{padding:.55rem 0}
 }
 
 /* RESPONSIVO */
