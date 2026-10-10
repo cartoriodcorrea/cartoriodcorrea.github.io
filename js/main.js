@@ -104,21 +104,71 @@ document.querySelectorAll('.docs-aba').forEach(btn => {
 });
 mostraDoc('firma');
 
-// Status aberto/fechado (seg a sex, 8h às 17h, horário local)
+// Status aberto/fechado: seg a sex, 8h às 17h, fechado nos feriados.
+// A hora é a de Solânea (UTC-3, sem horário de verão), não a do aparelho de quem
+// visita: os campos getUTC* de "agora - 3h" são o relógio da parede do cartório.
+// Feriados: os nacionais de lei (Leis 662/1949, 6.802/1980 e 14.759/2023), fixos,
+// mais a Sexta-feira da Paixão (Páscoa - 2), feriado religioso que a Lei 9.093/1995
+// deixa para a lei municipal. FECHADO_EXTRA guarda as datas avulsas em que o
+// cartório também não abre (data magna da Paraíba, feriado municipal de Solânea,
+// dia sem expediente fixado pela Corregedoria), no formato 'AAAA-MM-DD'. Ponto
+// facultativo não fecha cartório por si (Lei 662/1949, art. 3º).
+const FERIADOS_FIXOS = {
+  '01-01': 'Confraternização Universal', '04-21': 'Tiradentes', '05-01': 'Dia do Trabalho',
+  '09-07': 'Independência do Brasil', '10-12': 'Nossa Senhora Aparecida', '11-02': 'Finados',
+  '11-15': 'Proclamação da República', '11-20': 'Dia da Consciência Negra', '12-25': 'Natal'
+};
+const FECHADO_EXTRA = [];
+function dois(n) { return (n < 10 ? '0' : '') + n; }
+function pascoa(ano) { // algoritmo de Meeus/Jones/Butcher, calendário gregoriano
+  const a = ano % 19, b = Math.floor(ano / 100), c = ano % 100;
+  const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const mes = Math.floor((h + l - 7 * m + 114) / 31), dia = ((h + l - 7 * m + 114) % 31) + 1;
+  return Date.UTC(ano, mes - 1, dia);
+}
+function ehFeriado(dt) { // dt: Date cujos campos UTC são a data de Solânea
+  const ano = dt.getUTCFullYear(), md = dois(dt.getUTCMonth() + 1) + '-' + dois(dt.getUTCDate());
+  if (FERIADOS_FIXOS[md] || FECHADO_EXTRA.indexOf(ano + '-' + md) !== -1) return true;
+  return Date.UTC(ano, dt.getUTCMonth(), dt.getUTCDate()) === pascoa(ano) - 2 * 864e5;
+}
+function diaDeSemana(dt) { const s = dt.getUTCDay(); return s >= 1 && s <= 5; }
 const statusEl = document.getElementById('statusFuncionamento');
 if (statusEl) {
-  const agora = new Date();
-  const dia = agora.getDay(); // 0 dom ... 6 sáb
-  const hora = agora.getHours() + agora.getMinutes() / 60;
-  const abertoAgora = dia >= 1 && dia <= 5 && hora >= 8 && hora < 17;
-  if (abertoAgora) {
+  const agora = new Date(Date.now() - 3 * 36e5);
+  const hora = agora.getUTCHours() + agora.getUTCMinutes() / 60;
+  const diaN = function (n) { // a data de Solânea daqui a n dias
+    return new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), agora.getUTCDate() + n));
+  };
+  const SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  const chama = function (n) { // como chamar o dia daqui a n dias
+    if (n === 0) return 'hoje';
+    if (n === 1) return 'amanhã';
+    const dt = diaN(n);
+    if (n <= 6) return SEMANA[dt.getUTCDay()];
+    return 'dia ' + dois(dt.getUTCDate()) + '/' + dois(dt.getUTCMonth() + 1);
+  };
+  const hojeUtil = diaDeSemana(agora) && !ehFeriado(agora);
+  if (hojeUtil && hora >= 8 && hora < 17) {
     statusEl.innerHTML = '<i class="ri-checkbox-blank-circle-fill"></i> Aberto agora · fecha às 17h';
     statusEl.classList.add('aberto');
   } else {
-    let quando = 'segunda às 8h';
-    if (dia >= 1 && dia <= 5 && hora < 8) quando = 'hoje às 8h';
-    else if (dia >= 1 && dia <= 4 && hora >= 17) quando = 'amanhã às 8h';
-    statusEl.innerHTML = '<i class="ri-checkbox-blank-circle-fill"></i> Fechado agora · abre ' + quando;
+    // próximo dia útil (hoje mesmo, se ainda não deu 8h); o primeiro dia de semana
+    // pulado por feriado vira aviso, para ninguém vir num dia que parece de expediente
+    let n = (hojeUtil && hora < 8) ? 0 : 1, pulado = -1;
+    while (n < 60 && !(diaDeSemana(diaN(n)) && !ehFeriado(diaN(n)))) {
+      if (pulado < 0 && diaDeSemana(diaN(n))) pulado = n;
+      n++;
+    }
+    let texto = 'Fechado agora · abre ' + chama(n) + ' às 8h';
+    if (diaDeSemana(agora) && ehFeriado(agora)) texto = 'Feriado hoje · abre ' + chama(n) + ' às 8h';
+    else if (pulado > 0) { // curto, para caber numa linha no celular; a bolinha vermelha já diz fechado
+      const quem = chama(pulado);
+      texto = quem.charAt(0).toUpperCase() + quem.slice(1) + ' é feriado · abre ' + chama(n) + ' às 8h';
+    }
+    statusEl.innerHTML = '<i class="ri-checkbox-blank-circle-fill"></i> ' + texto;
     statusEl.classList.add('fechado');
   }
 }
