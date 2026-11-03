@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css">
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -135,6 +135,11 @@
       <a href="#servicos" class="btn btn-ouro">Conheça os serviços</a>
       <a href="https://wa.me/5583993963957" class="btn btn-linha" target="_blank" rel="noopener"><i class="ri-whatsapp-line"></i> Falar no WhatsApp</a>
     </div>
+    <!-- FRASE DO DIA: escondida sem JS; js/frase-dia.js escolhe a do dia pela data de Solânea -->
+    <aside class="frase-dia" id="fraseDia" aria-label="Você sabia?" hidden>
+      <i class="ri-lightbulb-flash-line" aria-hidden="true"></i>
+      <p><strong>Você sabia?</strong> <span class="frase-dia-texto"></span></p>
+    </aside>
   </div>
 </section>
 
@@ -527,6 +532,7 @@
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
+<script src="js/frase-dia.js?v=1"></script>
 <script src="js/main.js?v=9"></script>
 </body>
 </html>
