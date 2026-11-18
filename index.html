@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=11">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -127,6 +127,11 @@
 <section class="hero" id="inicio">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="container hero-inner">
+    <!-- DATA COMEMORATIVA: escondida sem JS; js/data-comemorativa.js mostra só no dia (data de Solânea) -->
+    <aside class="data-comemorativa" id="dataComemorativa" hidden>
+      <i class="ri-award-line" aria-hidden="true"></i>
+      <div><p class="dc-titulo"></p><p class="dc-texto"></p></div>
+    </aside>
     <p class="hero-eyebrow">Solânea · Paraíba · Desde 1953</p>
     <p class="status-chip" id="statusFuncionamento"></p>
     <h1>Segurança jurídica e autenticidade em cada ato</h1>
@@ -532,6 +537,7 @@
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
+<script src="js/data-comemorativa.js?v=1"></script>
 <script src="js/frase-dia.js?v=1"></script>
 <script src="js/main.js?v=9"></script>
 </body>
